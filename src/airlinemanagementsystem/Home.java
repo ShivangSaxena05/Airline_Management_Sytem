@@ -40,19 +40,18 @@ public class Home extends JFrame implements ActionListener {
                 int x = 0;
                 int y = fm.getAscent();
                 
-                g2d.setColor(Color.BLACK); // Stroke Color
-                g2d.setStroke(new BasicStroke(5)); // Stroke Thickness
-                g2d.drawString(getText(), x + 2, y + 2); // Draw Shadow/Stroke
+                g2d.setColor(Color.BLACK);
+                g2d.setStroke(new BasicStroke(5));
+                g2d.drawString(getText(), x + 2, y + 2);
                 
-                g2d.setColor(Color.YELLOW); // Original Text Color
-                g2d.drawString(getText(), x, y); // Draw Original Text
+                g2d.setColor(Color.YELLOW);
+                g2d.drawString(getText(), x, y);
             }
         };
         head.setFont(new Font("Tahoma", Font.BOLD, 40));
         head.setBounds(width / 3, 100, 600, 50);
         image.add(head);
 
-        // Add Subheading (Tagline)
         JLabel tagline = new JLabel("Your Trust, Our Wings!") {
         	@Override
         	protected void paintComponent(Graphics gg) {
@@ -172,6 +171,8 @@ public class Home extends JFrame implements ActionListener {
         if (e.getSource() == log) {
             new Login();
             setVisible(false);
+        }else if(e.getSource()==sign) {
+        	new Signup();
         } else if (e.getSource() == logout) {
             new Home("");
             setVisible(false);
@@ -201,7 +202,7 @@ public class Home extends JFrame implements ActionListener {
             }
         } else if (text.equals("View Passengers")) {
             if (isLoggedIn) {
-                new passenger();
+                new Passenger();
             } else {
                 JOptionPane.showMessageDialog(null, "Please login first to view passenger details.");
             }
@@ -213,7 +214,7 @@ public class Home extends JFrame implements ActionListener {
             }
         } else if (text.equals("Boarding Pass")) {
             if (isLoggedIn) {
-                new BoardingPass();
+                new Boardingpass();
             } else {
                 JOptionPane.showMessageDialog(null, "Please login first to view the boarding pass.");
             }

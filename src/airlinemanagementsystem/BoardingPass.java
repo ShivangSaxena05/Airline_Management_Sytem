@@ -5,13 +5,13 @@ import java.awt.*;
 import java.sql.*;
 import java.awt.event.*;
 
-public class BoardingPass extends JFrame implements ActionListener {
+public class Boardingpass extends JFrame implements ActionListener {
 
     JTextField tfpnr;
     JButton enter;
     JLabel cname, cphone, ldate, cnationality, lbgender, lblfname, lblfcode, source, destt;
 
-    public BoardingPass() {
+    public Boardingpass() {
         setTitle("Boarding Pass - Shiva Airlines");
         getContentPane().setBackground(Color.WHITE);
         setLayout(null);
@@ -161,6 +161,6 @@ public class BoardingPass extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        new BoardingPass();
+        new Boardingpass();
     }
 }

@@ -5,12 +5,12 @@ import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
 
-public class passenger extends JFrame implements ActionListener {
+public class Passenger extends JFrame implements ActionListener {
     JTextField tfaadhar;
     JButton fetch;
     JLabel cname, cnationality, cphone, caddress, cgender;
 
-    public passenger() {
+    public Passenger() {
         getContentPane().setBackground(new Color(135, 206, 235));
         setLayout(null);
 
@@ -116,6 +116,6 @@ public class passenger extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        new passenger();
+        new Passenger();
     }
 }

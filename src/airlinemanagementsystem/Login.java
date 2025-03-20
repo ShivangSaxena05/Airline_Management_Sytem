@@ -6,75 +6,84 @@ import java.awt.event.*;
 import java.sql.*;
 
 public class Login extends JFrame implements ActionListener {
-    JButton submit, reset, close;
-    JTextField tusername;
-    JPasswordField tpassword;
+
+    JTextField tfEmail;
+    JPasswordField pfPassword;
+    JButton login, back;
 
     public Login() {
-        getContentPane().setBackground(new Color(135, 206, 235));
+        setTitle("Airline Management System - Login");
         setLayout(null);
+        getContentPane().setBackground(new Color(173, 216, 230));
 
-        JLabel lblusername = new JLabel("UserName");
-        lblusername.setBounds(20, 20, 100, 20);
-        add(lblusername);
+        JLabel heading = new JLabel("Login to Shiva Airlines");
+        heading.setBounds(150, 20, 400, 30);
+        heading.setFont(new Font("Tahoma", Font.BOLD, 24));
+        heading.setForeground(Color.BLUE);
+        add(heading);
 
-        tusername = new JTextField();
-        tusername.setBounds(110, 20, 200, 20);
-        add(tusername);
+        JLabel lblEmail = new JLabel("Email:");
+        lblEmail.setBounds(50, 80, 100, 25);
+        add(lblEmail);
 
-        JLabel lblpassword = new JLabel("Password");
-        lblpassword.setBounds(20, 60, 100, 20);
-        add(lblpassword);
+        tfEmail = new JTextField();
+        tfEmail.setBounds(160, 80, 200, 25);
+        add(tfEmail);
 
-        tpassword = new JPasswordField();
-        tpassword.setBounds(110, 60, 200, 20);
-        add(tpassword);
+        JLabel lblPassword = new JLabel("Password:");
+        lblPassword.setBounds(50, 120, 100, 25);
+        add(lblPassword);
 
-        reset = new JButton("Reset");
-        reset.setBounds(50, 120, 120, 20);
-        reset.addActionListener(this);
-        add(reset);
+        pfPassword = new JPasswordField();
+        pfPassword.setBounds(160, 120, 200, 25);
+        add(pfPassword);
 
-        submit = new JButton("Submit");
-        submit.setBounds(200, 120, 120, 20);
-        submit.addActionListener(this);
-        add(submit);
+        login = new JButton("Login");
+        login.setBounds(100, 180, 100, 30);
+        login.setBackground(Color.BLUE);
+        login.setForeground(Color.WHITE);
+        login.addActionListener(this);
+        add(login);
 
-        close = new JButton("Close");
-        close.setBounds(120, 160, 120, 20);
-        close.addActionListener(this);
-        add(close);
+        back = new JButton("Back");
+        back.setBounds(250, 180, 100, 30);
+        back.setBackground(Color.GRAY);
+        back.setForeground(Color.WHITE);
+        back.addActionListener(this);
+        add(back);
 
-        setSize(400, 250);
-        setLocation(600, 270);
+        setSize(500, 300);
+        setLocation(500, 250);
         setVisible(true);
     }
 
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == submit) {
-            String username = tusername.getText();
-            String password = new String(tpassword.getPassword());
+    public void actionPerformed(ActionEvent ae) {
+        if (ae.getSource() == login) {
+            String email = tfEmail.getText();
+            String password = new String(pfPassword.getPassword());
 
             try {
-                Conn c = new Conn();
-                String query = "select * from login where username ='" + username + "' and password = '" + password + "'";
-                ResultSet rs = c.s.executeQuery(query);
+                Conn conn = new Conn();
+                String query = "SELECT * FROM login WHERE email = ? AND password = ?";
+                PreparedStatement pst = conn.c.prepareStatement(query);
+                pst.setString(1, email);
+                pst.setString(2, password);
+                ResultSet rs = pst.executeQuery();
 
                 if (rs.next()) {
                     JOptionPane.showMessageDialog(null, "Login Successful!");
-                    new Home(username); // Pass the username to Home
-                    setVisible(false); // Close login window
+                    setVisible(false);
+                    new Home(rs.getString("full_name"));
                 } else {
-                    JOptionPane.showMessageDialog(null, "Invalid UserName or Password");
+                    JOptionPane.showMessageDialog(null, "Invalid Credentials!");
                 }
-            } catch (Exception ae) {
-                ae.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Database Error!");
             }
-        } else if (e.getSource() == close) {
+        } else if (ae.getSource() == back) {
             setVisible(false);
-        } else if (e.getSource() == reset) {
-            tusername.setText("");
-            tpassword.setText("");
+            new Home("");
         }
     }
 
